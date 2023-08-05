@@ -1,33 +1,39 @@
+# mc-bukkit-2.0 [test]
 
+This is a Minecraft Mod project for version 1.18.2 developed using Fabric API 0.31.0 and Bukkit.
 
-这是一个使用 Fabric API 0.31.0 和 Bukkit 开发的 Minecraft 1.18.2 版本的 Mod 项目。
-功能介绍
+## Features
 
-1. NPC 功能：项目中包含了一个 NPC 系统，可以创建具有不同行为的 NPC。例如，NPC 可以跟随玩家，可以在特定位置移动，可以进行攻击等行为。此外，还可以为 NPC 设置不同的皮肤和名称。
+1. **NPC Functionality**: The project includes an NPC system that can create NPCs with various behaviors. For example, NPCs can follow players, move at specific locations, and perform attacks. In addition, different skins and names can be set for NPCs.
 
-2. 建筑生成系统：项目中包含了一个建筑生成系统，可以在游戏中自动生成不同的建筑。例如，可以生成具有熔炉、工作台和箱子的房间，也可以生成随机大小的房间。
+2. **Building Generation System**: The project includes a building generation system that can automatically generate different buildings in the game. For example, you can generate rooms with furnaces, workbenches, and chests, or rooms of random sizes.
 
-3. 聊天模拟系统：项目中包含了一个聊天模拟系统，可以模拟玩家在游戏中的聊天行为。例如，可以模拟玩家的聊天内容，也可以模拟玩家的聊天频率。
+3. **Chat Simulation System**: The project includes a chat simulation system that can simulate player chat behavior in the game. For example, it can simulate player chat content and chat frequency.
 
-4. 自定义物品监听：项目中包含了一个自定义物品监听系统，可以监听玩家使用自定义物品的行为。
+4. **Custom Item Listener**: The project includes a custom item listener system that can listen to player behavior when using custom items.
 
-5. 命令处理系统：项目中包含了一个命令处理系统，可以处理玩家输入的命令。
-使用方法
+5. **Command Processing System**: The project includes a command processing system that can handle commands entered by players.
 
-1. 将项目导入到你的 IDE 中。
-2. 运行项目，生成 Mod 文件。
-3. 将生成的 Mod 文件放入到 Minecraft 的 mods 文件夹中。
-4. 启动 Minecraft，即可使用 Mod。
-注意事项
+## Usage
 
-1. 本项目是基于 Fabric API 0.31.0 和 Bukkit 开发的，使用其他版本的 API 可能会导致项目无法正常运行。
-2. 本项目是为 Minecraft 1.16.5 版本开发的，使用其他版本的 Minecraft 可能会导致 Mod 无法正常运行。
-开发者
+1. Import the project into your IDE.
+2. Run the project to generate the Mod file.
+3. Put the generated Mod file into the mods folder of Minecraft.
+4. Start Minecraft, and you can use the Mod.
 
-本项目由 Chun 开发。
-联系方式
+## Note
 
-如果你在使用过程中遇到任何问题，或者有任何建议，欢迎联系我。
-许可证
+1. This project is developed based on Fabric API 0.31.0 and Bukkit. Using other versions of the API may cause the project to not run properly.
+2. This project is developed for Minecraft 1.16.5. Using other versions of Minecraft may cause the Mod to not run properly.
 
-本项目采用 MIT 许可证。
+## Developer
+
+This project is developed by Chun.
+
+## Contact
+
+If you encounter any problems during use, or have any suggestions, please feel free to contact me.
+
+## License
+
+This project is licensed under the MIT License.
