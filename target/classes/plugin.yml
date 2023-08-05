@@ -1,0 +1,30 @@
+name: bukkit-mod-2.0
+version: '1.0'
+main: com.chun._._
+api-version: '1.18'
+description: cc
+depend: [Citizens]
+
+
+commands:
+
+  p-box:
+    description: 绘制一个方框
+
+  take:
+    description: 生成村民的命令
+  man:
+    description: 生成村民的命令
+    usage: /man
+  vel:
+    description: 生成牛鼻村民
+    usage: /vel
+  helpcuttree:
+    description: Makes the smart villager help cut trees.
+
+  helpbuildhouse:
+    description: Makes the smart villager help build houses.
+
+  defendmode:
+    description: Switches the smart villager into defence mode.
+
