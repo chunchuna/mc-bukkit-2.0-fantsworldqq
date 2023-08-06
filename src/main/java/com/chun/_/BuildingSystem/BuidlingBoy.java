@@ -4,7 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
 
 public class BuidlingBoy {
 
@@ -128,6 +132,130 @@ public class BuidlingBoy {
         // 设置一个门
         world.getBlockAt(startX, startY + 1, startZ + roomSize / 2).setType(Material.AIR);
         world.getBlockAt(startX, startY + 2, startZ + roomSize / 2).setType(Material.AIR);
+    }
+
+//    public static void generateBuilding_4(Player player, int count) {
+//        for (int i = 0; i < count; i++) {
+//            // 获取玩家的位置
+//            Location playerLocation = player.getLocation();
+//
+//            // 生成随机位置
+//            double offsetX = (Math.random() - 0.5) * 300;
+//            double offsetZ = (Math.random() - 0.5) * 300;
+//            Location randomLocation = playerLocation.add(offsetX, 0, offsetZ);
+//
+//            // 找到地面位置
+//            Location groundLocation = randomLocation.getWorld().getHighestBlockAt(randomLocation).getLocation();
+//
+//            // 在地面上生成火把
+//            groundLocation.getBlock().setType(Material.TORCH);
+//
+//            // 在地面上的旁边生成火堆
+//            Location campfireLocation = groundLocation.add(1, 0, 0);
+//            campfireLocation.getBlock().setType(Material.CAMPFIRE);
+//        }
+//    }
+
+    public static void generateBuilding_4(Player player, int count) {
+        Random random = new Random();
+        for (int i = 0; i < count; i++) {
+            // 获取玩家的位置
+            Location playerLocation = player.getLocation();
+
+            // 生成随机位置
+            double offsetX = (Math.random() - 0.5) * 300;
+            double offsetZ = (Math.random() - 0.5) * 300;
+            Location randomLocation = playerLocation.add(offsetX, 0, offsetZ);
+
+            // 找到地面位置
+            Location groundLocation = randomLocation.getWorld().getHighestBlockAt(randomLocation).getLocation();
+
+            // 生成1-6个火把
+            int torchCount = random.nextInt(6) + 1;
+            for (int j = 0; j < torchCount; j++) {
+                // 在地面上生成火把
+                Location torchLocation = groundLocation.clone().add(j, 1, 0);
+                torchLocation.getBlock().setType(Material.TORCH);
+            }
+        }
+    }
+
+
+    public static void generateBuilding_5(Player player, int count) {
+        for (int i = 0; i < count; i++) {
+            // 获取玩家的位置
+            Location playerLocation = player.getLocation();
+
+            // 生成随机位置
+            double offsetX = (Math.random() - 0.5) * 500;
+            double offsetZ = (Math.random() - 0.5) * 500;
+            Location randomLocation = playerLocation.add(offsetX, 0, offsetZ);
+
+            // 找到地面位置
+            Location groundLocation = randomLocation.getWorld().getHighestBlockAt(randomLocation).getLocation();
+
+            // 在地面上生成工作台
+            groundLocation.getBlock().setType(Material.CRAFTING_TABLE);
+
+            // 在工作台旁边生成熔炉
+            Location furnaceLocation = groundLocation.add(1, 0, 0);
+            furnaceLocation.getBlock().setType(Material.FURNACE);
+        }
+    }
+
+
+    public static void generateBuilding_6(Player player, int count) {
+        for (int i = 0; i < count; i++) {
+            // 获取玩家的位置
+            Location playerLocation = player.getLocation();
+
+            // 生成随机位置
+            double offsetX = (Math.random() - 0.5) * 500;
+            double offsetZ = (Math.random() - 0.5) * 500;
+            Location randomLocation = playerLocation.add(offsetX, 0, offsetZ);
+
+            // 找到地面位置
+            Location groundLocation = randomLocation.getWorld().getHighestBlockAt(randomLocation).getLocation();
+
+            // 在地面上生成小房子
+            generateHouse(groundLocation);
+        }
+    }
+
+    public static void generateHouse(Location location) {
+        Random random = new Random();
+
+        // 生成房子的墙壁
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < random.nextInt(3) + 3; y++) {  // 随机高度
+                for (int z = 0; z < 5; z++) {
+                    // 随机生成洞
+                    if (random.nextInt(10) != 0) {  // 10%的概率生成洞
+                        location.clone().add(x, y, z).getBlock().setType(Material.COBBLESTONE);
+                    }
+                }
+            }
+        }
+
+        // 生成房子的门
+        location.clone().add(2, 0, 0).getBlock().setType(Material.OAK_DOOR);
+
+        // 生成房子的窗户
+        location.clone().add(0, 2, 2).getBlock().setType(Material.GLASS);
+        location.clone().add(4, 2, 2).getBlock().setType(Material.GLASS);
+
+        // 在房子内部生成火把
+        location.clone().add(2, 2, 2).getBlock().setType(Material.TORCH);
+
+        // 在房子内部生成箱子
+        Block chestBlock = location.clone().add(2, 1, 2).getBlock();
+        chestBlock.setType(Material.CHEST);
+
+        // 在箱子内部生成随机物品
+        Chest chest = (Chest) chestBlock.getState();
+        chest.getInventory().addItem(new ItemStack(Material.DIAMOND, 1));
+        chest.getInventory().addItem(new ItemStack(Material.BREAD, 5));
+        chest.getInventory().addItem(new ItemStack(Material.IRON_SWORD, 1));
     }
 
 }

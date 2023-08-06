@@ -10,12 +10,15 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmonkey.sentinel.SentinelTrait;
 
 import java.util.*;
 
@@ -66,11 +69,23 @@ public class NPCManagerbase {
         Navigator navigator = npc.getNavigator();
         npc.setProtected(false); // 设置NPC可以被攻击
         NavigatorParameters params = navigator.getDefaultParameters();
-        params.baseSpeed(1.0f);  // 设置 NPC 的移动速度
-        params.attackRange(2.0);  // 设置 NPC 的攻击范围
-        params.distanceMargin(3);  // 设置 NPC 与玩家的距离
+        params.baseSpeed(2.0f);  // 设置 NPC 的移动速度
+        params.attackRange(5.0);  // 设置 NPC 的攻击范围
+        params.distanceMargin(1);  // 设置 NPC 与玩家的距离
+
+
+        SentinelTrait sentinel = npc.getTrait(SentinelTrait.class);
+        sentinel.attackRate = 15;
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc select " + npc.getId());
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "sentinel range 199");
+
+
+        // 设置NPC的目标
+        sentinel.addTarget("monsters");
+        sentinel.addTarget("npcs");
+        sentinel.addTarget("players");
         //navigator.setTarget(player, true);  // 设置 NPC 的目标为玩家
-        //setNpcEquipment(npc); // 设置NPC的装备
+        setNpcEquipment(npc); // 设置NPC的装备
         return npc;
     }
 
@@ -96,21 +111,62 @@ public class NPCManagerbase {
             EntityEquipment equipment = livingEntity.getEquipment();
 
             if (equipment != null) {
-                // 设置主手物品
-                equipment.setItemInMainHand(new ItemStack(Material.TORCH));
-                // 设置头部装备
-                equipment.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-                // 设置胸部装备
-                //equipment.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-                // 设置腿部装备
-                //equipment.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                // 设置脚部装备
-                //equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+                // 创建一个随机数生成器
+                Random random = new Random();
+
+                // 创建一个包含所有可能装备的列表，包括null
+                Material[] helmets = {Material.DIAMOND_HELMET, Material.GOLDEN_HELMET, Material.IRON_HELMET, Material.LEATHER_HELMET, null};
+                Material[] chestplates = {Material.DIAMOND_CHESTPLATE, Material.GOLDEN_CHESTPLATE, Material.IRON_CHESTPLATE, Material.LEATHER_CHESTPLATE, null};
+                Material[] leggings = {Material.DIAMOND_LEGGINGS, Material.GOLDEN_LEGGINGS, Material.IRON_LEGGINGS, Material.LEATHER_LEGGINGS, null};
+                Material[] boots = {Material.DIAMOND_BOOTS, Material.GOLDEN_BOOTS, Material.IRON_BOOTS, Material.LEATHER_BOOTS, null};
+                Material[] weapons = {Material.DIAMOND_SWORD, Material.GOLDEN_SWORD, Material.IRON_SWORD, Material.WOODEN_SWORD, Material.STONE_SWORD, null};
+
+                // 随机选择装备
+                ItemStack helmet = createRandomEnchantedItem(helmets[random.nextInt(helmets.length)], random);
+                ItemStack chestplate = createRandomEnchantedItem(chestplates[random.nextInt(chestplates.length)], random);
+                ItemStack legging = createRandomEnchantedItem(leggings[random.nextInt(leggings.length)], random);
+                ItemStack boot = createRandomEnchantedItem(boots[random.nextInt(boots.length)], random);
+                ItemStack weapon = createRandomEnchantedItem(weapons[random.nextInt(weapons.length)], random);
+
+                equipment.setHelmet(helmet);
+                equipment.setChestplate(chestplate);
+                equipment.setLeggings(legging);
+                equipment.setBoots(boot);
+                equipment.setItemInMainHand(weapon);
             }
         }
     }
 
-    // 添加其他方法...
+    private ItemStack createRandomEnchantedItem(Material material, Random random) {
+        if (material == null) {
+            return null;
+        }
+
+        ItemStack item = new ItemStack(material);
+
+        // 有30%的几率附魔
+        if (random.nextDouble() < 0.3) {
+            ItemMeta meta = item.getItemMeta();
+
+            // 随机选择一个附魔
+            Enchantment enchantment = Enchantment.values()[random.nextInt(Enchantment.values().length)];
+
+            // 随机选择一个附魔等级（1-5级）
+            int level = random.nextInt(5) + 1;
+
+            // 添加附魔
+            meta.addEnchant(enchantment, level, true);
+
+            item.setItemMeta(meta);
+        }
+
+        return item;
+    }
 
 
 }
+
+    // 添加其他方法...
+
+
+

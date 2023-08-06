@@ -39,6 +39,11 @@ public class RoomEnterListener implements Listener {
             for (int i = 0; i < 20; i++) {
                 BuidlingBoy.generateBuilding_3(player);
             }
+
+            BuidlingBoy.generateBuilding_4(player,50);
+            BuidlingBoy.generateBuilding_5(player,30);
+            BuidlingBoy.generateBuilding_6(player,90);
+
             //获得特殊道具
             ItemGiver.GetApple(event);
 
@@ -58,7 +63,7 @@ public class RoomEnterListener implements Listener {
                     NPCManagerbase npcManager = new NPCManagerbase();
 
                     // 生成30个NPC
-                    for (int i = 0; i < 35; i++) {
+                    for (int i = 0; i < 110; i++) {
                         player.performCommand("take");
 
                     }

@@ -14,12 +14,12 @@ public class EmptyTrait extends Trait {
 
     @Override
     public void onAttach() {
-        _.instance.getServer().getLogger().info(npc.getName() + " has been attached with EmptyTrait!");
+       // _.instance.getServer().getLogger().info(npc.getName() + " has been attached with EmptyTrait!");
     }
 
     @Override
     public void onRemove() {
-        _.instance.getServer().getLogger().info(npc.getName() + " has been detached from EmptyTrait!");
+        //_.instance.getServer().getLogger().info(npc.getName() + " has been detached from EmptyTrait!");
     }
 
     @Override

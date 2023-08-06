@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -39,7 +40,7 @@ public class npctest extends Trait {
     @Override
     public void onAttach() {
         npc = this.getNPC();
-        _.instance.getServer().getLogger().info(npc.getName() + " npc run");
+       // _.instance.getServer().getLogger().info(npc.getName() + " npc run");
     }
 
     public void followPlayer(Player player) {
@@ -62,32 +63,41 @@ public class npctest extends Trait {
     @Override
     public void run() {
 
+        //behavior_run_custom_movement();
+        behavior_run_custom_movement();
         if (targetPlayer == null || !targetPlayer.isOnline()) {
             // 如果目标玩家不存在或已离线，那么不做任何事情
             //_.instance.getServer().getLogger().info(npc.getName() + " player获取失败");
-            _.instance.getServer().getLogger().info(npc.getName() + " null");
+            //_.instance.getServer().getLogger().info(npc.getName() + " null");
             return;
         }
-        _.instance.getServer().getLogger().info(npc.getName() + " no null");
-        Location npcLocation = npc.getEntity().getLocation();
-        Location playerLocation = targetPlayer.getLocation();
-        npc.getNavigator().getDefaultParameters().baseSpeed(1.0f);
 
-        double distance = npcLocation.distance(playerLocation);
-
-
-        if (distance < 2) {
-            _.instance.getServer().getLogger().info(npc.getName() + " fo");
-            behavior_flo_player();
-
-        } else {
-            _.instance.getServer().getLogger().info(npc.getName() + " 应该走随机");
-            behavior_run_custom_movement();
-        }
+//        //_.instance.getServer().getLogger().info(npc.getName() + " no null");
+//        if(npc==null)return;
+//        Location npcLocation = npc.getEntity().getLocation();
+//        Location playerLocation = targetPlayer.getLocation();
+//        npc.getNavigator().getDefaultParameters().baseSpeed(1.0f);
+//
+//        double distance = npcLocation.distance(playerLocation);
+//
+//
+//        if (distance < 10) {
+//            //_.instance.getServer().getLogger().info(npc.getName() + " fo");
+//            behavior_flo_player();
+//
+//        } else {
+//           // _.instance.getServer().getLogger().info(npc.getName() + " 应该走随机");
+//            behavior_run_custom_movement();
+//        }
     }
 
 
     public void behavior_flo_player() {
+        if(targetPlayer==null)
+        {
+            behavior_run_custom_movement();
+        }
+
         Location npcLocation = npc.getEntity().getLocation();
         Location playerLocation = targetPlayer.getLocation();
         npc.getNavigator().getDefaultParameters().baseSpeed(1.0f);
@@ -107,26 +117,37 @@ public class npctest extends Trait {
 
         }
 
-        _.instance.getServer().getLogger().info(npc.getName() + " 跟随玩家");
+        //_.instance.getServer().getLogger().info(npc.getName() + " 跟随玩家");
     }
 
     public void behavior_run_custom_movement() {
-        _.instance.getServer().getLogger().info(npc.getName() + " 到了随机函数了");
+        Entity entity = npc.getEntity();
+        if (entity == null) {
+            // NPC没有被加载到世界中，处理这种情况的代码
+            return;
+        }
+       // _.instance.getServer().getLogger().info(npc.getName().info(npc.getName() + " 到了随机函数了");
         Location npcLocation = npc.getEntity().getLocation();
+
+        if (targetPlayer == null) {
+            // targetPlayer是null，处理这种情况的代码
+            return;
+        }
         Location playerLocation = targetPlayer.getLocation();
         npc.getNavigator().getDefaultParameters().baseSpeed(1.0f);
         double distance = npcLocation.distance(playerLocation);
 
         if (!npc.getNavigator().isNavigating()) {
-            Location randomLocation = npcLocation.clone().add((Math.random() - 0.5) * 60, 0, (Math.random() - 0.5) * 60);
+            Location randomLocation = npcLocation.clone().add((Math.random() - 0.5) * 300, 0, (Math.random() - 0.5) * 300);
+            //Location randomLocation = npcLocation.clone().add((Math.random() - 0.5) * 60, 0, (Math.random() - 0.5) * 60);
             goToLocation(randomLocation);
-            _.instance.getServer().getLogger().info(npc.getName() + " 随机移动" + distance);
+            //_.instance.getServer().getLogger().info(npc.getName() + " 随机移动" + distance);
             na_mode = "ramrun";
         } else {
             if (na_mode != "ramrun") {
                 Location randomLocation = npcLocation.clone().add((Math.random() - 0.5) * 60, 0, (Math.random() - 0.5) * 60);
                 goToLocation(randomLocation);
-                _.instance.getServer().getLogger().info(npc.getName() + " 随机移动" + distance);
+                //_.instance.getServer().getLogger().info(npc.getName() + " 随机移动" + distance);
                 na_mode = "ramrun";
             } else {
 

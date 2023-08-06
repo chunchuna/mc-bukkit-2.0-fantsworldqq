@@ -3,7 +3,8 @@ version: '1.0'
 main: com.chun._._
 api-version: '1.18'
 description: cc
-depend: [Citizens]
+depend: [Citizens,Sentinel]
+
 
 
 commands:

@@ -3,7 +3,8 @@ version: '${project.version}'
 main: com.chun._._
 api-version: '1.18'
 description: cc
-depend: [Citizens]
+depend: [Citizens,Sentinel]
+
 
 
 commands:
